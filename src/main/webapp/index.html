@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuizOn..</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+          input[type="submit"] {
+        background-color: #ffffff;
+        color: #000000;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+      }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: linear-gradient(to right, #2c3e50, #4ca1af);
+            font-family: 'Satisfy', cursive; /* Use the Satisfy font */
+        }
+
+        .container {
+            text-align: center;
+        }
+
+        .title {
+            font-size: 48px;
+            color: #ffffff;
+            animation: bounce-in 1s ease-in-out;
+        }
+
+        @keyframes bounce-in {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            70% {
+                transform: scale(1.2);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+​
+        /* Additional CSS for login or signup redirection page */
+        .btn {
+            font-size: 18px;
+            padding: 12px 24px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #0c0c0c;
+            background-color: #3498db;
+        }
+
+        .btn.login {
+            background-color: #2980b9;
+        }
+
+        .continue {
+            font-size: 16px;
+            color: #FFFFFF;
+            opacity: 0;
+            margin-top: 20px;
+            animation: fadeInUp 4s linear forwards;
+            cursor: pointer;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .side-button {
+            position: fixed;
+            top: 10px;
+            left: 10px;
+            height:-25%;
+            width:-25%;
+            background-color: #ffffff;
+            color: #000000;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function redirectToLogin() {
+            window.location.href = "homepage.html";
+        }
+
+        function redirectToSignup() {
+            window.location.href = "AdminPanel.jsp";
+        }
+
+        function redirectOnClick() {
+            var continueText = document.querySelector(".continue");
+            continueText.style.opacity = "0";
+            continueText.style.cursor = "default";
+            setTimeout(function() {
+                continueText.textContent = "loading.......";
+                continueText.style.opacity = "10";
+                setTimeout(function() {
+                    redirectToLogin(); // Redirect to login.html, change to redirectToSignup() to redirect to signup.html
+                }, 3000); // Adjust the time (in milliseconds) you want the message to stay visible, e.g., 3000ms = 3 seconds
+            }, 2000); // Adjust the time (in milliseconds) before showing "Redirecting..." message, e.g., 2000ms = 2 seconds
+        }
+    </script>
+</head>
+<body onclick="redirectOnClick()">
+
+    <div class="container">
+  
+        <h1 class="title" style="font-size:8em">QuizOn</h1>
+        <div class="continue"><h1>Login</h1></div>
+    </div>
+    <button class="side-button" onclick="redirectToSignup()">Admin</button>
+</body>
+</html>

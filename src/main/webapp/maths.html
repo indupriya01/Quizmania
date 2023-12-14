@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Maths Quiz</title>
+<style>
+   body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .quiz-container {
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px 2px rgba(100, 100, 100, 0.1);
+    padding: 2rem;
+    width: 600px;
+  }
+
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .quiz-question {
+    font-size: 18px;
+    margin-bottom: 1rem;
+  }
+
+  .quiz-options label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .quiz-options input[type="radio"] {
+    margin-right: 0.5rem;
+  }
+
+  .quiz-submit, .quiz-next, .quiz-reset {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  .quiz-submit:hover, .quiz-next:hover, .quiz-reset:hover {
+    background-color: #0056b3;
+  }
+
+  .quiz-submit, .quiz-reset {
+    display: block;
+    width: 100%;
+  }
+
+  .quiz-next {
+    display: none;
+  }
+
+  #scoreDisplay {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+<div class="quiz-container">
+  <div class="quiz-header">
+    <h2>Maths Quiz</h2>
+    <p>Test your mathematical skills!</p>
+  </div>
+
+  <form id="quizForm">
+    <!-- Your quiz questions and options here -->
+
+    <!-- Question 1 -->
+    <div class="quiz-question" data-question="1">
+      Find the Missing Term in Multiples of 6: 6, 12, 18, 24, _, 36, 42, _ 54, 60.
+      <div class="quiz-options">
+        <label>
+          <input type="radio" name="question1" value="fi">32, 45
+        </label>
+        <label>
+          <input type="radio" name="question1" value="se">24, 40
+        </label>
+        <label>
+          <input type="radio" name="question1" value="th">30, 48
+        </label>
+        <label>
+          <input type="radio" name="question1" value="fou">25, 49
+        </label>
+      </div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="quiz-question" data-question="2" style="display: none;">
+      How Many Years are there in a Decade?
+      <div class="quiz-options">
+        <label>
+          <input type="radio" name="question2" value="fi1">5 years
+        </label>
+        <label>
+          <input type="radio" name="question2" value="se1">10 years
+        </label>
+        <label>
+          <input type="radio" name="question2" value="th1">15 years
+        </label>
+        <label>
+          <input type="radio" name="question2" value="fou1">20 years
+        </label>
+      </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="quiz-question" data-question="3" style="display: none;">
+      Look at this series: 36, 34, 30, 28, …, 22 What number should come to fill in the blank space?
+      <div class="quiz-options">
+        <label>
+          <input type="radio" name="question3" value="fi2">25
+        </label>
+        <label>
+          <input type="radio" name="question3" value="se2">24
+        </label>
+        <label>
+          <input type="radio" name="question3" value="th2">26
+        </label>
+        <label>
+          <input type="radio" name="question3" value="fou2">none of these
+        </label>
+      </div>
+    </div>
+
+    <!-- Navigation buttons -->
+    <input type="button" class="quiz-submit" value="Submit" onclick="submitForm();" />
+    <input type="button" class="quiz-next" value="Next" onclick="showNextQuestion();" style="display: none;" />
+    <input type="button" class="quiz-reset" value="Reset" onclick="resetForm();" />
+  </form>
+
+  <!-- Add a div to display the score -->
+  <div id="scoreDisplay"></div>
+</div>
+
+<script>
+let currentQuestion = 1;
+let score = 0;
+const questionsData = [
+  {
+    question: "Find the Missing Term in Multiples of 6: 6, 12, 18, 24, _, 36, 42, _ 54, 60.",
+    options: [
+      "32, 45",
+      "24, 40",
+      "30, 48",
+      "25, 49"
+    ],
+    correctAnswer: "24, 40"
+  },
+  {
+    question: "How Many Years are there in a Decade?",
+    options: [
+      "5 years",
+      "10 years",
+      "15 years",
+      "20 years"
+    ],
+    correctAnswer: "10 years"
+  },
+  {
+    question: "Look at this series: 36, 34, 30, 28, …, 22 What number should come to fill in the blank space?",
+    options: [
+      "25",
+      "24",
+      "26",
+      "none of these"
+    ],
+    correctAnswer: "26"
+  }
+];
+const questionsData2 = [
+	  {
+	    question: "Find the Missing Term in Multiples of 6: 6, 12, 18, 24, _, 36, 42, _ 54, 60.",
+	    options: [
+	      "32, 45",
+	      "24, 40",
+	      "30, 48",
+	      "25, 49"
+	    ],
+	    correctAnswer: "24, 40"
+	  },
+	  {
+	    question: "How Many Years are there in a Decade?",
+	    options: [
+	      "5 years",
+	      "10 years",
+	      "15 years",
+	      "20 years"
+	    ],
+	    correctAnswer: "10 years"
+	  },
+	  {
+	    question: "Look at this series: 36, 34, 30, 28, …, 22 What number should come to fill in the blank space?",
+	    options: [
+	      "25",
+	      "24",
+	      "26",
+	      "none of these"
+	    ],
+	    correctAnswer: "26"
+	  },
+	  {
+	    question: "What is the result of 5 * 3 + 2?",
+	    options: [
+	      "15",
+	      "17",
+	      "20",
+	      "25"
+	    ],
+	    correctAnswer: "17"
+	  },
+	  {
+	    question: "Which of the following is a prime number?",
+	    options: [
+	      "4",
+	      "9",
+	      "13",
+	      "15"
+	    ],
+	    correctAnswer: "13"
+	  },
+	  {
+	    question: "Solve the equation: 2x + 5 = 15",
+	    options: [
+	      "x = 5",
+	      "x = 7",
+	      "x = 8",
+	      "x = 10"
+	    ],
+	    correctAnswer: "x = 5"
+	  }
+	];
+
+
+// Function to shuffle the questions
+// Function to shuffle the questions
+function shuffleQuestions(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+// Function to show the next question
+function showNextQuestion() {
+  currentQuestion++;
+  showQuestion(currentQuestion);
+}
+
+// Function to show a specific question
+function showQuestion(questionNumber) {
+  const questions = document.querySelectorAll('.quiz-question');
+  questions.forEach(question => {
+    question.style.display = 'none';
+  });
+
+  const currentQuestionElement = document.querySelector(`.quiz-question[data-question="${questionNumber}"]`);
+  if (currentQuestionElement) {
+    currentQuestionElement.style.display = 'block';
+  }
+
+  const nextButton = document.querySelector('.quiz-next');
+  const submitButton = document.querySelector('.quiz-submit');
+
+  if (currentQuestion === questionsData.length) {
+    nextButton.style.display = 'none';
+    submitButton.style.display = 'block';
+  } else {
+    nextButton.style.display = 'block';
+    submitButton.style.display = 'none';
+  }
+}
+
+// Function to submit the form and calculate the score
+function submitForm() {
+  const form = document.getElementById("quizForm");
+  const currentQuestionElement = document.querySelector(`.quiz-question[data-question="${currentQuestion}"]`);
+  const selectedOption = form.elements[`question${currentQuestion}`].value;
+
+  // Update score if the answer is correct
+  if (selectedOption === getCorrectAnswer(currentQuestion)) {
+    score++;
+  }
+
+  // Show the next question or the final score
+  if (currentQuestion === questionsData.length) {
+    showScore(score);
+  } else {
+    showNextQuestion();
+  }
+}
+
+// Function to get the correct answer for a question
+function getCorrectAnswer(questionNumber) {
+  return questionsData[questionNumber - 1].correctAnswer;
+}
+
+// Function to show the final score
+function showScore(score) {
+  const scoreDisplay = document.getElementById("scoreDisplay");
+  scoreDisplay.innerHTML = `<h2>Your Score: ${score}</h2>`;
+}
+
+// Function to reset the form and shuffle the questions
+function resetForm() {
+  shuffleQuestions(questionsData2);
+  currentQuestion = 1;
+  score = 0;
+  showQuestion(currentQuestion);
+}
+
+// Show the first question on page load
+
+shuffleQuestions(questionsData);
+showQuestion(currentQuestion);
+</script>
+
+</body>
+</html>

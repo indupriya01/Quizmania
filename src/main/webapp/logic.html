@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+*{
+box-sizing:border-box;
+}
+body{
+background-color:#b8c6db;
+background-image:linear-gradient( 109.6deg, rgba(156,252,248,1) 11.2%, rgba(110,123,251,1) 91.1% );
+font-family:'Poppins','sans-serif';
+align-content:center;
+ display:flex;
+ justify-content:center;
+ height:100vh;
+ overflow:hidden;
+ margin:0;
+
+}
+.quiz-container
+{
+background-color:#fff;
+border-radius:35px;
+box-shadow:0 0 10px 2px rgba(100,100,100,0.1);
+width:750px;
+height:650px;
+overflow:hidden;
+
+
+}
+.quiz-header{
+padding:4rem;
+}
+h2{
+padding:1rem;
+text-align:center;
+margin:0;
+}
+.quiz-container h2 {
+  font-size: 16px; /* Adjust the font size as needed */
+}
+
+</style>
+<body>
+<!-- Your HTML code here -->
+<div class="quiz-container">
+  <div class="quiz-header">
+    <form id="quizForm">
+      <!-- Your quiz questions and options here -->
+      <h2>Question 1: Five people were eating apples, A finished before B, but behind C. D finished before E, but behind B. What was the finishing order?</h2>
+      <input type="radio" name="first" value="fi">DCBAE<br>
+      <input type="radio" name="first" value="se">ABCDE<br>
+      <input type="radio" name="first" value="th">CABDE<br>
+      <input type="radio" name="first" value="fou">NONE<br>
+      <br><br>
+      
+      <h2>Question 2: The day before two days after the day before tomorrow is Saturday. What day is it today?</h2>
+      <input type="radio" name="second" value="fi1">Monday<br>
+      <input type="radio" name="second" value="se1">Sunday<br>
+      <input type="radio" name="second" value="th1">Thursday<br>
+      <input type="radio" name="second" value="fou1">Friday<br>
+      <br><br>
+        
+      <h2>Question 3: In a top-secret message, if LIVING is coded as KGSHLD. How will BUDDHA be coded?</h2>
+      <input type="radio" name="third" value="fi2">ATEEIB<br>
+      <input type="radio" name="third" value="se2">ATACFX<br>
+      <input type="radio" name="third" value="th2">ATCCGZ<br>
+      <input type="radio" name="third" value="fou2">none of these<br>
+     
+      <input type="button" value="Submit" onclick="calculateScore();" />
+      <br>
+      <br>
+      <input type="button" value="Reset" onclick="changeQuestions();" />
+    </form>
+  </div>
+</div>
+
+<!-- Add a div to display the score -->
+<div id="scoreDisplay"></div>
+
+<script>
+// Define different sets of questions and their correct answers
+const questionSets = [
+  {
+    questions: [
+      "Five people were eating apples, A finished before B, but behind C. D finished before E, but behind B. What was the finishing order?",
+      "The day before two days after the day before tomorrow is Saturday. What day is it today?",
+      "In a top-secret message, if LIVING is coded as KGSHLD. How will BUDDHA be coded?"
+    ],
+    options: [
+      ["DCBAE", "ABCDE", "CABDE", "NONE"],
+      ["Monday", "Sunday", "Thursday", "Friday"],
+      ["ATEEIB", "ATACFX", "ATCCGZ", "none of these"]
+    ],
+    answers: ["se", "se1", "fou2"]
+  },
+  {
+    questions: [
+      "	'Who sang the title song for the latest Bond film, No Time to Die?', 'Adele', 'Sam Smith', 'Billie Eilish', 'none', 'c' ",
+      "'Who is generally considered the inventor of the motor car?', 'none', 'Henry Ford', 'Henry M. Leland', 'Karl Benz', 'd'",
+      "In simple interest rate per annum a certain sum amounts to Rs. 5,182 in 2 years and Rs. 5,832 in 3 years. The principal in rupees is ?"
+    ],
+    options: [
+      ["Adele", "Sam smith", "Billi hash", "none"],
+      ["Henry Ford ", "Ram Singh", "karl benz", "none"],
+      [" 2882 ", "3882", "1234", "80979"]
+    ],
+    answers: ["se", "se1", "fou2"] // Set the correct answers for the second set of questions
+  }
+];
+
+let currentSetIndex = 0; // Variable to keep track of the current set of questions
+
+// Function to change the questions and options dynamically
+function changeQuestions() {
+  currentSetIndex = (currentSetIndex + 1) % questionSets.length; // Switch to the next set of questions
+  const currentSet = questionSets[currentSetIndex]; // Get the current set of questions
+  
+  // Update the questions and options in the form
+  const form = document.getElementById("quizForm");
+  const questionElements = form.getElementsByTagName("h2");
+  const optionElements = form.querySelectorAll("input[type=radio]");
+
+  for (let i = 0; i < currentSet.questions.length; i++) {
+    questionElements[i].textContent = currentSet.questions[i];
+
+    for (let j = 0; j < 4; j++) {
+      optionElements[i * 4 + j].value = currentSet.options[i][j]; // Set the value of the <input> elements
+      optionElements[i * 4 + j].nextSibling.textContent = currentSet.options[i][j]; // Set the content of the corresponding label
+    }
+  }
+}
+
+// Function to calculate the score
+function calculateScore() {
+  const currentSet = questionSets[currentSetIndex]; // Get the current set of questions
+  const form = document.getElementById("quizForm");
+  let score = 0;
+
+  for (let i = 0; i < currentSet.questions.length; i++) {
+    const selectedOption = form.elements[`first second third`.split(' ')[i]].value;
+    if (selectedOption === currentSet.answers[i]) {
+      score++;
+    }
+  }
+
+  // Display the score
+  const scoreDisplay = document.getElementById("scoreDisplay");
+  scoreDisplay.innerHTML = `<h2>Your Score: ${score}</h2>`;
+}
+</script>
+</body>
+</html>
